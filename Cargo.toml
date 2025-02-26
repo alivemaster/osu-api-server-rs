@@ -1,0 +1,10 @@
+[package]
+name = "osu-api-server-rs"
+version = "0.1.0"
+authors = ["alivemaster <alivemaster3@gmail.com>"]
+edition = "2024"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+tokio = { version = "1", features = ["full"] }
+warp = "0.3.7"
