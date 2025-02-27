@@ -5,7 +5,7 @@ authors = ["alivemaster <alivemaster3@gmail.com>"]
 edition = "2024"
 
 [dependencies]
+axum = "0.8.1"
 rosu-v2 = { git = "https://github.com/MaxOhn/rosu-v2", branch = "lazer" }
 serde = { version = "1.0", features = ["derive"] }
 tokio = { version = "1", features = ["full"] }
-warp = "0.3.7"
