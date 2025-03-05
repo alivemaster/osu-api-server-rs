@@ -1,6 +1,6 @@
 mod handlers;
 mod routes;
-use routes::create_routes;
+use routes::create as create_routes;
 
 #[tokio::main]
 async fn main() {

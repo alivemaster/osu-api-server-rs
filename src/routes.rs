@@ -1,7 +1,7 @@
 use crate::handlers::*;
 use axum::{Router, routing::get};
 
-pub fn create_routes() -> Router<std::sync::Arc<rosu_v2::Osu>> {
+pub fn create() -> Router<std::sync::Arc<rosu_v2::Osu>> {
     let index = Router::new().route("/", get(|| async { "osu-api-server-rs is running!" }));
     let beatmaps = Router::new().route("/{map_id}", get(beatmap_handler));
     let beatmapsets = Router::new().route("/{mapset_id}", get(beatmapset_handler));
