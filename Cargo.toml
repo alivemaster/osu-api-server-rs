@@ -12,3 +12,4 @@ rosu-v2 = { git = "https://github.com/MaxOhn/rosu-v2", branch = "lazer", feature
 ] }
 serde = { version = "1.0", features = ["derive"] }
 tokio = { version = "1", features = ["full"] }
+toml = "0.8.20"
