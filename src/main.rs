@@ -1,16 +1,17 @@
 mod config;
-use config::Config;
-
 mod handlers;
-
 mod routes;
+
+use config::Config;
+use rosu_v2::prelude::*;
 use routes::create as create_routes;
+use std::sync::Arc;
 
 #[tokio::main]
 async fn main() {
     let config = Config::parse();
-    let osu_client = std::sync::Arc::new(
-        rosu_v2::Osu::new(
+    let osu_client = Arc::new(
+        Osu::new(
             config.osu.client_id,
             config
                 .osu
