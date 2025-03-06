@@ -4,12 +4,11 @@ pub async fn handler(
     State(osu_client): State<Arc<Osu>>,
     Path(paths): Path<BeatmapPaths>,
     Query(params): Query<BeatmapParams>,
-) -> Json<BeatmapResponse> {
+) -> Result<Json<BeatmapResponse>, OsuErrorResponse> {
     let mut beatmap = osu_client
         .beatmap()
         .map_id(paths.map_id)
-        .await
-        .unwrap();
+        .await?;
 
     let attributes = osu_client.beatmap_difficulty_attributes(paths.map_id);
     let attributes = if let Some(game_mode) = params.game_mode {
@@ -29,19 +28,17 @@ pub async fn handler(
     } else {
         attributes
     };
-    let attributes = attributes
-        .await
-        .unwrap();
+    let attributes = attributes.await?;
 
     if let Some(ref mut max_combo) = beatmap.max_combo {
         *max_combo = attributes.max_combo;
     }
     beatmap.stars = attributes.stars as f32;
 
-    Json(BeatmapResponse {
+    Ok(Json(BeatmapResponse {
         beatmap,
         attributes: attributes.attrs,
-    })
+    }))
 }
 
 #[derive(Deserialize)]

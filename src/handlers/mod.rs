@@ -20,3 +20,6 @@ pub use score::handler as score_handler;
 
 mod user;
 pub use user::handler as user_handler;
+
+mod osu_error;
+pub use osu_error::OsuErrorResponse;
