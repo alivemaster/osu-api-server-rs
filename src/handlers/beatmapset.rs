@@ -7,6 +7,7 @@ pub async fn handler(
     let beatmapset = osu_client
         .beatmapset(paths.mapset_id)
         .await?;
+
     Ok(Json(beatmapset))
 }
 

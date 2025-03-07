@@ -7,6 +7,7 @@ pub async fn handler(
     let osu_match = osu_client
         .osu_match(paths.match_id)
         .await?;
+
     Ok(Json(osu_match))
 }
 

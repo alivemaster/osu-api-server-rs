@@ -11,6 +11,7 @@ pub async fn handler(
         user
     };
     let user = user.await?;
+
     Ok(Json(user))
 }
 
