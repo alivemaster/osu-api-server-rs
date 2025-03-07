@@ -12,7 +12,15 @@ pub async fn handler(
 
 #[derive(Deserialize)]
 pub struct BeatmapsetPaths {
-    mapset_id: u32,
+    pub mapset_id: u32,
+}
+
+impl Clone for BeatmapsetPaths {
+    fn clone(&self) -> Self {
+        Self {
+            mapset_id: self.mapset_id,
+        }
+    }
 }
 
 type BeatmapsetResponse = BeatmapsetExtended;

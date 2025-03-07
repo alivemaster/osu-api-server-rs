@@ -17,8 +17,17 @@ pub async fn handler(
 
 #[derive(Deserialize)]
 pub struct ScorePaths {
-    game_mode: Option<u8>,
-    score_id: u64,
+    pub game_mode: Option<u8>,
+    pub score_id: u64,
+}
+
+impl Clone for ScorePaths {
+    fn clone(&self) -> Self {
+        Self {
+            game_mode: self.game_mode,
+            score_id: self.score_id,
+        }
+    }
 }
 
 type ScoreResponse = Score;

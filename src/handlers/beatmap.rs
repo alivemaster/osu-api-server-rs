@@ -43,13 +43,15 @@ pub async fn handler(
 
 #[derive(Deserialize)]
 pub struct BeatmapPaths {
-    map_id: u32,
+    pub map_id: u32,
 }
 
-#[derive(Deserialize)]
-pub struct BeatmapParams {
-    game_mode: Option<u8>,
-    mods: Option<String>,
+impl Clone for BeatmapPaths {
+    fn clone(&self) -> Self {
+        Self {
+            map_id: self.map_id,
+        }
+    }
 }
 
 #[derive(Serialize)]

@@ -16,8 +16,17 @@ pub async fn handler(
 
 #[derive(Deserialize)]
 pub struct UserPaths {
-    user_id: u32,
-    game_mode: Option<u8>,
+    pub user_id: u32,
+    pub game_mode: Option<u8>,
+}
+
+impl Clone for UserPaths {
+    fn clone(&self) -> Self {
+        Self {
+            user_id: self.user_id,
+            game_mode: self.game_mode,
+        }
+    }
 }
 
 type UserResponse = UserExtended;
