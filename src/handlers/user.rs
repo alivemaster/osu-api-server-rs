@@ -3,7 +3,7 @@ use super::*;
 pub async fn handler(
     State(osu_client): State<Arc<Osu>>,
     Path(paths): Path<UserPaths>,
-) -> Result<Json<UserResponse>, OsuErrorResponse> {
+) -> Result<UserResponse, OsuErrorResponse> {
     let user = osu_client.user(paths.user_id);
     let user = if let Some(game_mode) = paths.game_mode {
         user.mode(GameMode::from(game_mode))
@@ -29,4 +29,4 @@ impl Clone for UserPaths {
     }
 }
 
-type UserResponse = UserExtended;
+type UserResponse = Json<UserExtended>;

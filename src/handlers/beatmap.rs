@@ -4,7 +4,7 @@ pub async fn handler(
     State(osu_client): State<Arc<Osu>>,
     Path(paths): Path<BeatmapPaths>,
     Query(params): Query<BeatmapParams>,
-) -> Result<Json<BeatmapResponse>, OsuErrorResponse> {
+) -> Result<BeatmapResponse, OsuErrorResponse> {
     let mut beatmap = osu_client
         .beatmap()
         .map_id(paths.map_id)
@@ -54,8 +54,4 @@ impl Clone for BeatmapPaths {
     }
 }
 
-#[derive(Serialize)]
-pub struct BeatmapResponse {
-    beatmap: BeatmapExtended,
-    attributes: GameModeAttributes,
-}
+type BeatmapResponse = Json<BeatmapExtended>;

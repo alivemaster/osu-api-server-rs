@@ -3,7 +3,7 @@ use super::*;
 pub async fn handler(
     State(osu_client): State<Arc<Osu>>,
     Path(paths): Path<BeatmapsetPaths>,
-) -> Result<Json<BeatmapsetResponse>, OsuErrorResponse> {
+) -> Result<BeatmapsetResponse, OsuErrorResponse> {
     let beatmapset = osu_client
         .beatmapset(paths.mapset_id)
         .await?;
@@ -23,4 +23,4 @@ impl Clone for BeatmapsetPaths {
     }
 }
 
-type BeatmapsetResponse = BeatmapsetExtended;
+type BeatmapsetResponse = Json<BeatmapsetExtended>;
