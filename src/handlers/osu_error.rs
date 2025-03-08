@@ -17,7 +17,6 @@ impl IntoResponse for OsuErrorResponse {
 
 impl From<OsuError> for OsuErrorResponse {
     fn from(error: OsuError) -> Self {
-        let message = error.to_string();
         let status = match error {
             OsuError::ParsingValue { .. } => StatusCode::BAD_REQUEST,
             OsuError::NotFound => StatusCode::NOT_FOUND,
@@ -34,12 +33,14 @@ impl From<OsuError> for OsuErrorResponse {
             OsuError::ChunkingResponse { .. } | OsuError::UnavailableEndpoint => {
                 StatusCode::BAD_GATEWAY
             }
-            OsuError::Response { status, .. } => status,
+            OsuError::Response { status, .. } => status.to_owned(),
             OsuError::Request { .. } | OsuError::ServiceUnavailable(..) => {
                 StatusCode::SERVICE_UNAVAILABLE
             }
             _ => StatusCode::INTERNAL_SERVER_ERROR,
         };
+        let message = error.to_string();
+
         Self { status, message }
     }
 }
