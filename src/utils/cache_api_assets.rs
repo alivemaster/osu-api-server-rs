@@ -10,20 +10,9 @@ pub async fn cache_api_assets(url: &str) -> Result<String, Box<dyn Error>> {
         None => return Err("url doesn't match!".into()),
     };
 
-    let sub_domain = match url_captures.name("sub_domain") {
-        Some(value) => value.as_str(),
-        None => "",
-    };
-    let sub_dir = match url_captures.name("sub_dir") {
-        Some(value) => value.as_str(),
-        None => "",
-    };
-    let mut sub_dir = sub_dir.to_owned();
-    let file_name = match url_captures.name("file_name") {
-        Some(value) => value.as_str(),
-        None => "",
-    };
-    let mut file_name = file_name.to_owned();
+    let sub_domain = &url_captures["sub_domain"];
+    let mut sub_dir = url_captures["sub_dir"].to_owned();
+    let mut file_name = url_captures["file_name"].to_owned();
 
     // determine the directory to save file
     if sub_domain == "a" {
