@@ -6,6 +6,7 @@ edition = "2024"
 
 [dependencies]
 axum = "0.8.1"
+mime_guess = "2.0.5"
 regex = "1.11.1"
 reqwest = "0.12.12"
 rosu-v2 = { git = "https://github.com/MaxOhn/rosu-v2", branch = "lazer", features = [
@@ -14,4 +15,5 @@ rosu-v2 = { git = "https://github.com/MaxOhn/rosu-v2", branch = "lazer", feature
 ] }
 serde = { version = "1.0", features = ["derive"] }
 tokio = { version = "1", features = ["full"] }
+tokio-util = "0.7.13"
 toml = "0.8.20"

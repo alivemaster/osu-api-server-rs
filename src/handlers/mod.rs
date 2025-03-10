@@ -28,3 +28,6 @@ pub use user::handler as user_handler;
 
 mod osu_error;
 pub use osu_error::OsuErrorResponse;
+
+mod assets;
+pub use assets::handler as assets_handler;
