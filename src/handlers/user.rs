@@ -10,7 +10,43 @@ pub async fn handler(
     } else {
         user
     };
-    let user = user.await?;
+    let mut user = user.await?;
+
+    // replace assets urls
+    // avatar
+    if let Ok(path) = utils::cache_api_assets(&user.avatar_url).await {
+        user.avatar_url = path
+    }
+    // custom cover (if have)
+    if let Some(ref mut url) = user
+        .cover
+        .custom_url
+    {
+        if let Ok(path) = utils::cache_api_assets(&url).await {
+            *url = path
+        }
+    }
+    // cover
+    if let Ok(path) = utils::cache_api_assets(&user.cover.url).await {
+        user.cover.url = path
+    }
+    // team flag
+    if let Some(ref mut team) = user.team {
+        if let Some(ref mut url) = team.flag_url {
+            if let Ok(path) = utils::cache_api_assets(&url).await {
+                *url = path
+            }
+        }
+    }
+    // badges
+    if let Some(ref mut items) = user.badges {
+        for item in items {
+            let url = &mut item.image_url;
+            if let Ok(path) = utils::cache_api_assets(url).await {
+                *url = path
+            }
+        }
+    }
 
     Ok(Json(user))
 }

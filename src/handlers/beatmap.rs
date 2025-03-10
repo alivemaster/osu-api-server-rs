@@ -4,10 +4,40 @@ pub async fn handler(
     State(osu_client): State<Arc<Osu>>,
     Path(paths): Path<BeatmapPaths>,
 ) -> Result<BeatmapResponse, OsuErrorResponse> {
-    let beatmap = osu_client
+    let mut beatmap = osu_client
         .beatmap()
         .map_id(paths.map_id)
         .await?;
+
+    // replace assets urls
+    // covers
+    if let Some(ref mut mapset) = beatmap.mapset {
+        let covers = &mut mapset.covers;
+        if let Ok(path) = utils::cache_api_assets(&covers.cover).await {
+            covers.cover = path
+        }
+        if let Ok(path) = utils::cache_api_assets(&covers.cover_2x).await {
+            covers.cover_2x = path
+        }
+        if let Ok(path) = utils::cache_api_assets(&covers.card).await {
+            covers.card = path
+        }
+        if let Ok(path) = utils::cache_api_assets(&covers.card_2x).await {
+            covers.card_2x = path
+        }
+        if let Ok(path) = utils::cache_api_assets(&covers.list).await {
+            covers.list = path
+        }
+        if let Ok(path) = utils::cache_api_assets(&covers.list_2x).await {
+            covers.list_2x = path
+        }
+        if let Ok(path) = utils::cache_api_assets(&covers.slim_cover).await {
+            covers.slim_cover = path
+        }
+        if let Ok(path) = utils::cache_api_assets(&covers.slim_cover_2x).await {
+            covers.slim_cover_2x = path
+        }
+    }
 
     Ok(Json(beatmap))
 }
