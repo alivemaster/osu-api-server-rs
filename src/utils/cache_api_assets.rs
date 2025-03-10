@@ -3,7 +3,7 @@ use std::error::Error;
 
 pub async fn cache_api_assets(url: &str) -> Result<String, Box<dyn Error>> {
     let url_pattern = Regex::new(
-        r"^https?://(?<sub_domain>a|assets|osu)\.ppy\.sh/(?:(?<category>[a-z]+(?:(?:-|/)[a-z]+)*)/)?(?:(?<item_id>[0-9]+)(?:/|\?))?(?:[a-z]+/)?(?<file_name>.+)$",
+        r"^https?://(?<sub_domain>a|assets|osu)\.ppy\.sh/(?:(?<sub_dir>[a-z0-9]+(?:(?:-|/|\?)[a-z0-9]+)*)(?:/|\?))(?<file_name>.+)$",
     ).unwrap();
     let url_captures = match url_pattern.captures(&url) {
         Some(captures) => captures,
@@ -14,14 +14,11 @@ pub async fn cache_api_assets(url: &str) -> Result<String, Box<dyn Error>> {
         Some(value) => value.as_str(),
         None => "",
     };
-    let item_id = match url_captures.name("item_id") {
+    let sub_dir = match url_captures.name("sub_dir") {
         Some(value) => value.as_str(),
         None => "",
     };
-    let category = match url_captures.name("category") {
-        Some(value) => value.as_str(),
-        None => "",
-    };
+    let mut sub_dir = sub_dir.to_owned();
     let file_name = match url_captures.name("file_name") {
         Some(value) => value.as_str(),
         None => "",
@@ -29,24 +26,18 @@ pub async fn cache_api_assets(url: &str) -> Result<String, Box<dyn Error>> {
     let mut file_name = file_name.to_owned();
 
     // determine the directory to save file
-    let mut file_dir = String::from("cache/");
     if sub_domain == "a" {
-        file_dir = file_dir + "users/avatar/";
-    } else if category == "user-profile-covers" {
-        file_dir = file_dir + "users/profile_cover/";
-    } else if category == "user-cover-presets" {
-        file_dir = file_dir + "users/profile_cover/presets/";
-    } else {
-        file_dir = file_dir + &category + "/";
+        sub_dir = "users/avatar/".to_owned() + &sub_dir;
     }
-    file_dir = if item_id != "" {
-        file_dir + &item_id + "/"
-    } else {
-        file_dir
-    };
-
-    // rename beatmap assets
-    if category == "beatmaps" {
+    sub_dir = sub_dir.replace("user-profile-covers", "users/profile_cover");
+    sub_dir = sub_dir.replace("user-cover-presets", "users/profile_cover/presets");
+    sub_dir = sub_dir.replace("profile-badges", "users/profile_badges");
+    if Regex::new("^beatmap")
+        .unwrap()
+        .is_match(&sub_dir)
+    {
+        sub_dir = sub_dir.replace("/covers", "");
+        // rename file
         let filename_pattern = Regex::new(
             r"^(?<name>[a-z]+(?:@2x)?)(?<ext>\.(?:jpeg|jpg|png|webp))\?(?<cache_id>[0-9]+)$",
         )
@@ -57,6 +48,8 @@ pub async fn cache_api_assets(url: &str) -> Result<String, Box<dyn Error>> {
                 captures["name"].to_owned() + "_" + &captures["cache_id"] + &captures["ext"];
         }
     }
+    let file_dir = String::from("cache/") + &sub_dir + "/";
+
     // "@2x" -> "_2x"
     file_name = file_name.replace("@", "_");
 
@@ -75,6 +68,6 @@ pub async fn cache_api_assets(url: &str) -> Result<String, Box<dyn Error>> {
         super::download_file(&url, &file_path).await?;
     }
 
-    let url_path = file_dir.replace("cache", "assets") + &file_name;
+    let url_path = "/".to_owned() + &file_dir.replace("cache", "assets") + &file_name;
     Ok(url_path)
 }
