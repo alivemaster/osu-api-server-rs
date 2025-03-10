@@ -32,15 +32,9 @@ pub async fn cache_api_assets(url: &str) -> Result<String, Box<dyn Error>> {
     let mut file_dir = String::from("cache/");
     if sub_domain == "a" {
         file_dir = file_dir + "users/avatar/";
-    } else if Regex::new(r"^user-profile-covers$")
-        .unwrap()
-        .is_match(&category)
-    {
+    } else if category == "user-profile-covers" {
         file_dir = file_dir + "users/profile_cover/";
-    } else if Regex::new(r"^user-cover-presets$")
-        .unwrap()
-        .is_match(&category)
-    {
+    } else if category == "user-cover-presets" {
         file_dir = file_dir + "users/profile_cover/presets/";
     } else {
         file_dir = file_dir + &category + "/";
