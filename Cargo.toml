@@ -6,6 +6,8 @@ edition = "2024"
 
 [dependencies]
 axum = "0.8.1"
+regex = "1.11.1"
+reqwest = "0.12.12"
 rosu-v2 = { git = "https://github.com/MaxOhn/rosu-v2", branch = "lazer", features = [
     "default",
     "serialize",

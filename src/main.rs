@@ -1,6 +1,7 @@
 mod config;
 mod handlers;
 mod routes;
+mod utils;
 
 use config::Config;
 use rosu_v2::prelude::*;
