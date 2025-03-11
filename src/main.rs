@@ -6,7 +6,15 @@ mod utils;
 use config::Config;
 use rosu_v2::prelude::*;
 use routes::create as create_routes;
-use std::sync::Arc;
+use std::sync::{Arc, LazyLock};
+
+static SELF_DIR: LazyLock<std::path::PathBuf> = LazyLock::new(|| {
+    let exe_path = std::env::current_exe().unwrap();
+    let self_path = exe_path
+        .parent()
+        .unwrap();
+    self_path.to_path_buf()
+});
 
 #[tokio::main]
 async fn main() {

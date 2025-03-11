@@ -42,17 +42,12 @@ pub async fn cache_api_assets(url: &str) -> Result<String, Box<dyn Error>> {
     // "@2x" -> "_2x"
     file_name = file_name.replace("@", "_");
 
-    let exe_path = std::env::current_exe().unwrap();
-    let self_dir = exe_path
-        .parent()
-        .unwrap();
-    let absolute_dir = self_dir.join(&file_dir);
-
+    let absolute_dir = crate::SELF_DIR.join(&file_dir);
     if !absolute_dir.exists() {
         std::fs::create_dir_all(&absolute_dir)?;
     }
-    let file_path = absolute_dir.join(&file_name);
 
+    let file_path = absolute_dir.join(&file_name);
     if !file_path.exists() {
         super::download_file(&url, &file_path).await?;
     }

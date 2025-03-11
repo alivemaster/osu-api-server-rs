@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
 use std::{
-    env::current_exe,
     fs::File,
     io::{Read, Write},
     path::PathBuf,
@@ -17,9 +16,10 @@ pub struct Config {
 
 impl Config {
     pub fn parse() -> Self {
-        let config_dir = Self::config_dir();
-        if config_dir.exists() {
-            let mut file = File::open(config_dir).unwrap();
+        let config_path = crate::SELF_DIR.join(CONFIG_FILENAME);
+
+        if config_path.exists() {
+            let mut file = File::open(config_path).unwrap();
 
             let mut content = String::new();
             file.read_to_string(&mut content)
@@ -28,20 +28,12 @@ impl Config {
             toml::from_str(&content).unwrap()
         } else {
             println!("No config file found! Creating default config...");
-            Self::create_default();
+            Self::create_default(config_path);
             std::process::exit(0);
         }
     }
 
-    fn config_dir() -> PathBuf {
-        let exe_path = current_exe().unwrap();
-        let parent = exe_path
-            .parent()
-            .unwrap();
-        parent.join(CONFIG_FILENAME)
-    }
-
-    fn create_default() {
+    fn create_default(file_path: PathBuf) {
         let default_config = Self {
             listener: ListenerConfig::default(),
             osu: OsuConfig {
@@ -52,8 +44,8 @@ impl Config {
             },
         };
         let toml_string = toml::to_string_pretty(&default_config).unwrap();
-        let mut file = File::create(Self::config_dir()).unwrap();
-        file.write_all(toml_string.as_bytes())
+        let mut file = File::create(file_path).unwrap();
+        file.write(toml_string.as_bytes())
             .unwrap();
     }
 }
