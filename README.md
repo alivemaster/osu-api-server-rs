@@ -1,8 +1,8 @@
 # osu-api-server-rs
 
-A simple API server based on [rosu-v2](https://github.com/MaxOhn/rosu-v2) developed for my personal usage.
+A simple API server based on [rosu-v2](https://github.com/MaxOhn/rosu-v2) with additional features. Developed for my personal usage.
 
-## Currently available routes:
+## Currently available routes
 
 `/beatmaps/{map_id}` gets a [BeatmapExtended](https://osu.ppy.sh/docs/index.html#beatmapextended)
 
@@ -21,3 +21,9 @@ A simple API server based on [rosu-v2](https://github.com/MaxOhn/rosu-v2) develo
 `/users/{user_id}` gets a [UserExtended](https://osu.ppy.sh/docs/index.html#userextended)
 
 `/users/{user_id}/{game_mode}` gets a [UserExtended](https://osu.ppy.sh/docs/index.html#userextended)
+
+## Additional features
+
+- [x]  Cache image assets from osu! api
+- [ ]  Extract original background images from beatmapset files(.osz)
+- [ ]  parse replay file(.osr) from requests and reponse score json
