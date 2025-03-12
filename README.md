@@ -6,9 +6,9 @@ A simple API server based on [rosu-v2](https://github.com/MaxOhn/rosu-v2) with a
 
 `/beatmaps/{map_id}` gets a [BeatmapExtended](https://osu.ppy.sh/docs/index.html#beatmapextended)
 
-`/beatmaps/{map_id}/attributes` gets a [BeatmapDifficultyAttributes](https://osu.ppy.sh/docs/index.html#beatmapdifficultyattributes)
+`/beatmaps/{map_id}/attributes?[mode][mods]` gets a [BeatmapDifficultyAttributes](https://osu.ppy.sh/docs/index.html#beatmapdifficultyattributes)
 
-`/beatmaps/{map_id}/with-attributes` gets a json including both [BeatmapExtended](https://osu.ppy.sh/docs/index.html#beatmapextended) and [BeatmapDifficultyAttributes](https://osu.ppy.sh/docs/index.html#beatmapdifficultyattributes)
+`/beatmaps/{map_id}/with-attributes?[mode][mods]` gets a json including both [BeatmapExtended](https://osu.ppy.sh/docs/index.html#beatmapextended) and [BeatmapDifficultyAttributes](https://osu.ppy.sh/docs/index.html#beatmapdifficultyattributes)
 
 `/beatmapsets/{mapset_id}` gets a [BeatmapSetExtended](https://osu.ppy.sh/docs/index.html#beatmapsetextended)
 
@@ -16,11 +16,11 @@ A simple API server based on [rosu-v2](https://github.com/MaxOhn/rosu-v2) with a
 
 `/scores/{score_id}` gets a [Score](https://osu.ppy.sh/docs/index.html#score)
 
-`/scores/{game_mode}/{score_id}` gets a [Score](https://osu.ppy.sh/docs/index.html#score)
+`/scores/{mode}/{score_id}` gets a [Score](https://osu.ppy.sh/docs/index.html#score)
 
 `/users/{user_id}` gets a [UserExtended](https://osu.ppy.sh/docs/index.html#userextended)
 
-`/users/{user_id}/{game_mode}` gets a [UserExtended](https://osu.ppy.sh/docs/index.html#userextended)
+`/users/{user_id}/{mode}` gets a [UserExtended](https://osu.ppy.sh/docs/index.html#userextended)
 
 ## Additional features
 
