@@ -1,4 +1,5 @@
 use super::*;
+use utils::replace_assets_urls::user_extended_assets;
 
 pub async fn handler(
     State(osu_client): State<Arc<Osu>>,
@@ -14,40 +15,7 @@ pub async fn handler(
 
     // replace assets urls
     if CONFIG.server.cache {
-        // avatar
-        if let Ok(path) = utils::cache_api_assets(&user.avatar_url).await {
-            user.avatar_url = path
-        }
-        // custom cover (if have)
-        if let Some(ref mut url) = user
-            .cover
-            .custom_url
-        {
-            if let Ok(path) = utils::cache_api_assets(&url).await {
-                *url = path
-            }
-        }
-        // cover
-        if let Ok(path) = utils::cache_api_assets(&user.cover.url).await {
-            user.cover.url = path
-        }
-        // team flag
-        if let Some(ref mut team) = user.team {
-            if let Some(ref mut url) = team.flag_url {
-                if let Ok(path) = utils::cache_api_assets(&url).await {
-                    *url = path
-                }
-            }
-        }
-        // badges
-        if let Some(ref mut items) = user.badges {
-            for item in items {
-                let url = &mut item.image_url;
-                if let Ok(path) = utils::cache_api_assets(url).await {
-                    *url = path
-                }
-            }
-        }
+        user_extended_assets(&mut user).await
     }
 
     Ok(Json(user))

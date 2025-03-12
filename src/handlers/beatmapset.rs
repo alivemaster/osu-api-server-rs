@@ -1,4 +1,5 @@
 use super::*;
+use utils::replace_assets_urls::beatmapset_extended_assets;
 
 pub async fn handler(
     State(osu_client): State<Arc<Osu>>,
@@ -10,41 +11,7 @@ pub async fn handler(
 
     // replace assets urls
     if CONFIG.server.cache {
-        // covers
-        let covers = &mut beatmapset.covers;
-        if let Ok(path) = utils::cache_api_assets(&covers.cover).await {
-            covers.cover = path
-        }
-        if let Ok(path) = utils::cache_api_assets(&covers.cover_2x).await {
-            covers.cover_2x = path
-        }
-        if let Ok(path) = utils::cache_api_assets(&covers.card).await {
-            covers.card = path
-        }
-        if let Ok(path) = utils::cache_api_assets(&covers.card_2x).await {
-            covers.card_2x = path
-        }
-        if let Ok(path) = utils::cache_api_assets(&covers.list).await {
-            covers.list = path
-        }
-        if let Ok(path) = utils::cache_api_assets(&covers.list_2x).await {
-            covers.list_2x = path
-        }
-        if let Ok(path) = utils::cache_api_assets(&covers.slim_cover).await {
-            covers.slim_cover = path
-        }
-        if let Ok(path) = utils::cache_api_assets(&covers.slim_cover_2x).await {
-            covers.slim_cover_2x = path
-        }
-        // avatars
-        if let Some(ref mut users) = beatmapset.recent_favourites {
-            for user in users {
-                let url = &mut user.avatar_url;
-                if let Ok(path) = utils::cache_api_assets(url).await {
-                    *url = path
-                }
-            }
-        }
+        beatmapset_extended_assets(&mut beatmapset).await
     }
 
     Ok(Json(beatmapset))
