@@ -52,6 +52,6 @@ pub async fn cache_api_assets(url: &str) -> Result<String, Box<dyn Error>> {
         super::download_file(&url, &file_path).await?;
     }
 
-    let url_path = "/".to_owned() + &file_dir.replace("cache", "assets") + &file_name;
+    let url_path = "/assets/".to_owned() + &sub_dir + "/" + &file_name;
     Ok(url_path)
 }
