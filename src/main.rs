@@ -16,15 +16,17 @@ static SELF_DIR: LazyLock<std::path::PathBuf> = LazyLock::new(|| {
     self_path.to_path_buf()
 });
 
+static CONFIG: LazyLock<Config> = LazyLock::new(|| Config::parse());
+
 #[tokio::main]
 async fn main() {
-    let config = Config::parse();
     let osu_client = Arc::new(
         Osu::new(
-            config.osu.client_id,
-            config
+            CONFIG.osu.client_id,
+            CONFIG
                 .osu
-                .client_secret,
+                .client_secret
+                .to_owned(),
         )
         .await
         .unwrap(),
@@ -32,10 +34,11 @@ async fn main() {
 
     let app = create_routes().with_state(osu_client);
     let listener = tokio::net::TcpListener::bind((
-        config
+        CONFIG
             .listener
-            .address,
-        config.listener.port,
+            .address
+            .to_owned(),
+        CONFIG.listener.port,
     ))
     .await
     .unwrap();
