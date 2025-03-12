@@ -12,10 +12,10 @@ pub async fn handler(
         beatmap_attributes_handler(State(osu_client), Path(paths), Query(params.clone())).await?;
     let attributes = attributes.0;
 
-    if let Some(game_mode) = params.game_mode {
-        let game_mode = GameMode::from(game_mode);
-        if game_mode != beatmap.mode && beatmap.mode == GameMode::Osu {
-            beatmap.mode = game_mode;
+    if let Some(mode) = params.mode {
+        let mode = GameMode::from(mode);
+        if mode != beatmap.mode && beatmap.mode == GameMode::Osu {
+            beatmap.mode = mode;
             beatmap.convert = true;
         }
     }

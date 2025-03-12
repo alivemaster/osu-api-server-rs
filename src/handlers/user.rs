@@ -5,8 +5,8 @@ pub async fn handler(
     Path(paths): Path<UserPaths>,
 ) -> Result<UserResponse, OsuErrorResponse> {
     let user = osu_client.user(paths.user_id);
-    let user = if let Some(game_mode) = paths.game_mode {
-        user.mode(GameMode::from(game_mode))
+    let user = if let Some(mode) = paths.mode {
+        user.mode(GameMode::from(mode))
     } else {
         user
     };
@@ -56,14 +56,14 @@ pub async fn handler(
 #[derive(Deserialize)]
 pub struct UserPaths {
     pub user_id: u32,
-    pub game_mode: Option<u8>,
+    pub mode: Option<u8>,
 }
 
 impl Clone for UserPaths {
     fn clone(&self) -> Self {
         Self {
             user_id: self.user_id,
-            game_mode: self.game_mode,
+            mode: self.mode,
         }
     }
 }

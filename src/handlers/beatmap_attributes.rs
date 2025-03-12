@@ -6,8 +6,8 @@ pub async fn handler(
     Query(params): Query<BeatmapAttributesParams>,
 ) -> Result<BeatmapAttributesResponse, OsuErrorResponse> {
     let attributes = osu_client.beatmap_difficulty_attributes(paths.map_id);
-    let attributes = if let Some(game_mode) = params.game_mode {
-        attributes.mode(GameMode::from(game_mode))
+    let attributes = if let Some(mode) = params.mode {
+        attributes.mode(GameMode::from(mode))
     } else {
         attributes
     };
@@ -23,14 +23,14 @@ pub async fn handler(
 
 #[derive(Deserialize)]
 pub struct BeatmapAttributesParams {
-    pub game_mode: Option<u8>,
+    pub mode: Option<u8>,
     pub mods: Option<String>,
 }
 
 impl Clone for BeatmapAttributesParams {
     fn clone(&self) -> Self {
         Self {
-            game_mode: self.game_mode,
+            mode: self.mode,
             mods: self.mods.to_owned(),
         }
     }
