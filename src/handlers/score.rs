@@ -13,56 +13,58 @@ pub async fn handler(
     let mut score = score.await?;
 
     // replace assets urls
-    // covers
-    if let Some(ref mut mapset) = score.mapset {
-        let covers = &mut mapset.covers;
-        if let Ok(path) = utils::cache_api_assets(&covers.cover).await {
-            covers.cover = path
+    if CONFIG.server.cache {
+        // covers
+        if let Some(ref mut mapset) = score.mapset {
+            let covers = &mut mapset.covers;
+            if let Ok(path) = utils::cache_api_assets(&covers.cover).await {
+                covers.cover = path
+            }
+            if let Ok(path) = utils::cache_api_assets(&covers.cover_2x).await {
+                covers.cover_2x = path
+            }
+            if let Ok(path) = utils::cache_api_assets(&covers.card).await {
+                covers.card = path
+            }
+            if let Ok(path) = utils::cache_api_assets(&covers.card_2x).await {
+                covers.card_2x = path
+            }
+            if let Ok(path) = utils::cache_api_assets(&covers.list).await {
+                covers.list = path
+            }
+            if let Ok(path) = utils::cache_api_assets(&covers.list_2x).await {
+                covers.list_2x = path
+            }
+            if let Ok(path) = utils::cache_api_assets(&covers.slim_cover).await {
+                covers.slim_cover = path
+            }
+            if let Ok(path) = utils::cache_api_assets(&covers.slim_cover_2x).await {
+                covers.slim_cover_2x = path
+            }
         }
-        if let Ok(path) = utils::cache_api_assets(&covers.cover_2x).await {
-            covers.cover_2x = path
-        }
-        if let Ok(path) = utils::cache_api_assets(&covers.card).await {
-            covers.card = path
-        }
-        if let Ok(path) = utils::cache_api_assets(&covers.card_2x).await {
-            covers.card_2x = path
-        }
-        if let Ok(path) = utils::cache_api_assets(&covers.list).await {
-            covers.list = path
-        }
-        if let Ok(path) = utils::cache_api_assets(&covers.list_2x).await {
-            covers.list_2x = path
-        }
-        if let Ok(path) = utils::cache_api_assets(&covers.slim_cover).await {
-            covers.slim_cover = path
-        }
-        if let Ok(path) = utils::cache_api_assets(&covers.slim_cover_2x).await {
-            covers.slim_cover_2x = path
-        }
-    }
-    if let Some(ref mut user) = score.user {
-        // avatar
-        if let Ok(path) = utils::cache_api_assets(&user.avatar_url).await {
-            user.avatar_url = path
-        }
-        if let Some(ref mut cover) = user.cover {
-            // custom cover (if have)
-            if let Some(ref mut url) = cover.custom_url {
-                if let Ok(path) = utils::cache_api_assets(&url).await {
-                    *url = path
+        if let Some(ref mut user) = score.user {
+            // avatar
+            if let Ok(path) = utils::cache_api_assets(&user.avatar_url).await {
+                user.avatar_url = path
+            }
+            if let Some(ref mut cover) = user.cover {
+                // custom cover (if have)
+                if let Some(ref mut url) = cover.custom_url {
+                    if let Ok(path) = utils::cache_api_assets(&url).await {
+                        *url = path
+                    }
+                }
+                // cover
+                if let Ok(path) = utils::cache_api_assets(&cover.url).await {
+                    cover.url = path
                 }
             }
-            // cover
-            if let Ok(path) = utils::cache_api_assets(&cover.url).await {
-                cover.url = path
-            }
-        }
-        // team flag
-        if let Some(ref mut team) = user.team {
-            if let Some(ref mut url) = team.flag_url {
-                if let Ok(path) = utils::cache_api_assets(&url).await {
-                    *url = path
+            // team flag
+            if let Some(ref mut team) = user.team {
+                if let Some(ref mut url) = team.flag_url {
+                    if let Ok(path) = utils::cache_api_assets(&url).await {
+                        *url = path
+                    }
                 }
             }
         }

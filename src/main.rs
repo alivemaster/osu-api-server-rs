@@ -35,10 +35,14 @@ async fn main() {
     let app = create_routes().with_state(osu_client);
     let listener = tokio::net::TcpListener::bind((
         CONFIG
+            .server
             .listener
             .address
             .to_owned(),
-        CONFIG.listener.port,
+        CONFIG
+            .server
+            .listener
+            .port,
     ))
     .await
     .unwrap();

@@ -10,7 +10,7 @@ const CONFIG_FILENAME: &str = "config.toml";
 #[derive(Deserialize, Serialize)]
 pub struct Config {
     #[serde(default)]
-    pub listener: ListenerConfig,
+    pub server: ServerConfig,
     pub osu: OsuConfig,
 }
 
@@ -35,7 +35,7 @@ impl Config {
 
     fn create_default(file_path: PathBuf) {
         let default_config = Self {
-            listener: ListenerConfig::default(),
+            server: ServerConfig::default(),
             osu: OsuConfig {
                 client_id: 0,
                 client_secret: String::from(
@@ -51,18 +51,27 @@ impl Config {
 }
 
 #[derive(Deserialize, Serialize)]
+pub struct ServerConfig {
+    pub listener: ListenerConfig,
+    pub cache: bool,
+}
+
+impl Default for ServerConfig {
+    fn default() -> Self {
+        Self {
+            listener: ListenerConfig {
+                address: String::from("127.0.0.1"),
+                port: 7270,
+            },
+            cache: true,
+        }
+    }
+}
+
+#[derive(Deserialize, Serialize)]
 pub struct ListenerConfig {
     pub address: String,
     pub port: u16,
-}
-
-impl Default for ListenerConfig {
-    fn default() -> Self {
-        Self {
-            address: String::from("127.0.0.1"),
-            port: 7270,
-        }
-    }
 }
 
 #[derive(Deserialize, Serialize)]
