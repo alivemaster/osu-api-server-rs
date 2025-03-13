@@ -7,7 +7,7 @@ pub async fn handler(
 ) -> Result<UserResponse, OsuErrorResponse> {
     let user = osu_client.user(paths.user_id);
     let user = if let Some(mode) = paths.mode {
-        user.mode(GameMode::from(mode))
+        user.mode(mode.into())
     } else {
         user
     };

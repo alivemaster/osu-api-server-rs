@@ -1,4 +1,4 @@
-use rosu_pp::model::{beatmap::BeatmapAttributesBuilder, mode::GameMode};
+use rosu_pp::model::beatmap::BeatmapAttributesBuilder;
 use rosu_v2::prelude::{BeatmapExtended, GameModIntermode, GameModsIntermode};
 
 pub fn cal_beatmap_attrs(
@@ -14,22 +14,21 @@ pub fn cal_beatmap_attrs(
 
     // is a converted map?
     if let Some(mode) = mode {
-        let mode = rosu_v2::prelude::GameMode::from(mode);
-        if beatmap.mode != mode {
-            if beatmap.mode == rosu_v2::prelude::GameMode::Osu {
+        if beatmap.mode as u8 != mode {
+            if beatmap.mode as u8 == 0 {
                 // can convert
-                attrs_builder = attrs_builder.mode(GameMode::from(mode as u8), true);
+                attrs_builder = attrs_builder.mode(mode.into(), true);
 
                 // is a converted map
                 beatmap.convert = true;
-                beatmap.mode = mode;
+                beatmap.mode = mode.into();
             } else {
                 // can't convert
                 return;
             }
         }
     } else {
-        attrs_builder = attrs_builder.mode(GameMode::from(beatmap.mode as u8), false)
+        attrs_builder = attrs_builder.mode((beatmap.mode as u8).into(), false)
     };
 
     // has mods?

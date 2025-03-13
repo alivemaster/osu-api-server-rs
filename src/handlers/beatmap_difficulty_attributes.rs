@@ -7,12 +7,12 @@ pub async fn handler(
 ) -> Result<BeatmapDifficultyAttributesResponse, OsuErrorResponse> {
     let attributes = osu_client.beatmap_difficulty_attributes(paths.map_id);
     let attributes = if let Some(mode) = params.mode {
-        attributes.mode(GameMode::from(mode))
+        attributes.mode(mode.into())
     } else {
         attributes
     };
-    let attributes = if let Some(mods) = params.mods {
-        attributes.mods(GameModsIntermode::from_acronyms(&mods))
+    let attributes = if let Some(mods) = &params.mods {
+        attributes.mods(GameModsIntermode::from_acronyms(mods))
     } else {
         attributes
     };

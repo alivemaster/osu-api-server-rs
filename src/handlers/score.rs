@@ -7,7 +7,7 @@ pub async fn handler(
 ) -> Result<ScoreResponse, OsuErrorResponse> {
     let score = osu_client.score(paths.score_id);
     let score = if let Some(mode) = paths.mode {
-        score.mode(GameMode::from(mode))
+        score.mode(mode.into())
     } else {
         score
     };
