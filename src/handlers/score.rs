@@ -1,5 +1,5 @@
 use super::*;
-use utils::replace_assets_urls::score_assets;
+use utils::{cal_beatmap_attrs, replace_assets_urls::score_assets};
 
 pub async fn handler(
     State(osu_client): State<Arc<Osu>>,
@@ -12,6 +12,36 @@ pub async fn handler(
         score
     };
     let mut score = score.await?;
+
+    // replace beatmap attrs
+    if let Some(ref mut beatmap) = score.map {
+        cal_beatmap_attrs(
+            beatmap,
+            Some(score.mode as u8),
+            Some(GameModsIntermode::from_bits(score.mods.bits())),
+        );
+
+        // star, max combo
+        let diff_attrs = beatmap_difficulty_attributes_handler(
+            State(osu_client),
+            Path(beatmap::BeatmapPaths {
+                map_id: score.map_id,
+            }),
+            Query(beatmap::BeatmapParams {
+                mode: Some(score.mode as u8),
+                mods: Some(
+                    score
+                        .mods
+                        .to_string(),
+                ),
+            }),
+        )
+        .await?;
+        beatmap.stars = diff_attrs.stars as f32;
+        if let Some(ref mut max_combo) = beatmap.max_combo {
+            *max_combo = diff_attrs.max_combo
+        }
+    }
 
     // replace assets urls
     if CONFIG.server.cache {
