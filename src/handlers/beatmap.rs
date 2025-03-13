@@ -12,13 +12,7 @@ pub async fn handler(
         .await?;
 
     // replace attrs
-    if params
-        .mode
-        .is_some()
-        || params
-            .mods
-            .is_some()
-    {
+    if params.mode.is_some() || params.mods.is_some() {
         // mode(if it's a converted map), ar, cs, od, hp, bpm, length
         let mods = match &params.mods {
             Some(mods) => Some(GameModsIntermode::from_acronyms(mods)),

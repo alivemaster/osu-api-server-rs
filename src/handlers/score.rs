@@ -29,11 +29,7 @@ pub async fn handler(
             }),
             Query(beatmap::BeatmapParams {
                 mode: Some(score.mode as u8),
-                mods: Some(
-                    score
-                        .mods
-                        .to_string(),
-                ),
+                mods: Some(score.mods.to_string()),
             }),
         )
         .await?;
