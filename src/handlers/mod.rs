@@ -3,16 +3,13 @@ use axum::{
     Json,
     extract::{Path, Query, State},
 };
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 
 mod beatmap;
 pub use beatmap::handler as beatmap_handler;
 
 mod beatmap_attributes;
 pub use beatmap_attributes::handler as beatmap_attributes_handler;
-
-mod beatmap_with_attributes;
-pub use beatmap_with_attributes::handler as beatmap_with_attributes_handler;
 
 mod beatmapset;
 pub use beatmapset::handler as beatmapset_handler;
