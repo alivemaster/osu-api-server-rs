@@ -4,11 +4,9 @@ A simple API server based on [rosu-v2](https://github.com/MaxOhn/rosu-v2) with a
 
 ## Currently available routes
 
-`/beatmaps/{map_id}` gets a [BeatmapExtended](https://osu.ppy.sh/docs/index.html#beatmapextended)
+`/beatmaps/{map_id}?[mode][mods]` gets a [BeatmapExtended](https://osu.ppy.sh/docs/index.html#beatmapextended)
 
 `/beatmaps/{map_id}/attributes?[mode][mods]` gets a [BeatmapDifficultyAttributes](https://osu.ppy.sh/docs/index.html#beatmapdifficultyattributes)
-
-`/beatmaps/{map_id}/with-attributes?[mode][mods]` gets a json including both [BeatmapExtended](https://osu.ppy.sh/docs/index.html#beatmapextended) and [BeatmapDifficultyAttributes](https://osu.ppy.sh/docs/index.html#beatmapdifficultyattributes)
 
 `/beatmapsets/{mapset_id}` gets a [BeatmapSetExtended](https://osu.ppy.sh/docs/index.html#beatmapsetextended)
 
