@@ -866,6 +866,7 @@ dependencies = [
  "mime_guess",
  "regex",
  "reqwest",
+ "rosu-pp",
  "rosu-v2",
  "serde",
  "tokio",
@@ -1047,6 +1048,11 @@ dependencies = [
 ]
 
 [[package]]
+name = "rosu-map"
+version = "0.2.0"
+source = "git+https://github.com/MaxOhn/rosu-map#952bacc3115304c2a62f1db406fc6f677dc2d03b"
+
+[[package]]
 name = "rosu-mods"
 version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1054,6 +1060,15 @@ checksum = "743a643c73fd79731b2b688e60f5e86eeea0e0953ab1f4fac8b5ce0b476a5773"
 dependencies = [
  "paste",
  "serde",
+]
+
+[[package]]
+name = "rosu-pp"
+version = "2.0.0"
+source = "git+https://github.com/MaxOhn/rosu-pp?branch=pp-update#f874d70f3636c484c555839dfeaacbc6706206b8"
+dependencies = [
+ "rosu-map",
+ "rosu-mods",
 ]
 
 [[package]]

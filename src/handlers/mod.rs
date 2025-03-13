@@ -8,8 +8,8 @@ use serde::Deserialize;
 mod beatmap;
 pub use beatmap::handler as beatmap_handler;
 
-mod beatmap_attributes;
-pub use beatmap_attributes::handler as beatmap_attributes_handler;
+mod beatmap_difficulty_attributes;
+pub use beatmap_difficulty_attributes::handler as beatmap_difficulty_attributes_handler;
 
 mod beatmapset;
 pub use beatmapset::handler as beatmapset_handler;
