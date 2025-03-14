@@ -18,21 +18,15 @@ pub async fn handler(
         cal_beatmap_attrs(
             beatmap,
             Some(score.mode as u8),
-            Some(GameModsIntermode::from_bits(score.mods.bits())),
+            Some(score.mods.clone().into()),
         );
 
         // star, max combo
-        let diff_attrs = beatmap_difficulty_attributes_handler(
-            State(osu_client),
-            Path(beatmap::BeatmapPaths {
-                map_id: score.map_id,
-            }),
-            Query(beatmap::BeatmapParams {
-                mode: Some(score.mode as u8),
-                mods: Some(score.mods.to_string()),
-            }),
-        )
-        .await?;
+        let diff_attrs = osu_client
+            .beatmap_difficulty_attributes(score.map_id)
+            .mode(score.mode)
+            .mods(score.mods.clone())
+            .await?;
         beatmap.stars = diff_attrs.stars as f32;
         if let Some(ref mut max_combo) = beatmap.max_combo {
             *max_combo = diff_attrs.max_combo
