@@ -34,7 +34,7 @@ impl From<OsuError> for OsuErrorResponse {
                 StatusCode::BAD_GATEWAY
             }
             OsuError::Response { status, .. } => status.to_owned(),
-            OsuError::Request { .. } | OsuError::ServiceUnavailable(..) => {
+            OsuError::Request { .. } | OsuError::ServiceUnavailable { .. } => {
                 StatusCode::SERVICE_UNAVAILABLE
             }
             _ => StatusCode::INTERNAL_SERVER_ERROR,
