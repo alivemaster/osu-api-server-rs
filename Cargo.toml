@@ -17,4 +17,4 @@ rosu-pp = { git = "https://github.com/MaxOhn/rosu-pp", branch = "next" }
 serde = { version = "1.0", features = ["derive"] }
 tokio = { version = "1", features = ["full"] }
 tokio-util = "0.7"
-toml = "0.8"
+toml = "0.9"
