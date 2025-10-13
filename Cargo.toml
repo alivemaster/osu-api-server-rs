@@ -7,7 +7,7 @@ edition = "2024"
 [dependencies]
 axum = { version = "0.8", features = ["http2"] }
 mime_guess = "2.0.5"
-regex = "1.11"
+regex = "1.12"
 reqwest = "0.12"
 rosu-v2 = { git = "https://github.com/MaxOhn/rosu-v2", branch = "lazer", features = [
     "default",
