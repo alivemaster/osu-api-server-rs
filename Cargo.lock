@@ -924,10 +924,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "paste"
-version = "1.0.15"
+name = "pastey"
+version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "57c0d7b74b563b49d38dae00a0c37d4d6de9b432382b2892f0574ddcae73fd0a"
+checksum = "c5a797f0e07bdf071d15742978fc3128ec6c22891c31a3a931513263904c982a"
 
 [[package]]
 name = "percent-encoding"
@@ -1201,8 +1201,14 @@ name = "rosu-mods"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cdc002dd5c7baef181e98980615ef27df55f35ff291c088cb37e6a339f2777e1"
+
+[[package]]
+name = "rosu-mods"
+version = "0.4.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cc58d42f8f2308b4b241de147827af84179d0a318de250495c7c5e47cb701cd9"
 dependencies = [
- "paste",
+ "pastey",
  "serde",
 ]
 
@@ -1212,13 +1218,13 @@ version = "3.1.0"
 source = "git+https://github.com/MaxOhn/rosu-pp?branch=next#1bdb39fde4dc6f649daf5f9226422a48b01a4b9d"
 dependencies = [
  "rosu-map",
- "rosu-mods",
+ "rosu-mods 0.3.1",
 ]
 
 [[package]]
 name = "rosu-v2"
 version = "0.11.0"
-source = "git+https://github.com/MaxOhn/rosu-v2?branch=lazer#448fe602cfa5deff6206a5847a35b8c01a517ed3"
+source = "git+https://github.com/MaxOhn/rosu-v2?branch=lazer#520b2a5592bace5db4b6c4b1efeb1a61330f4e1d"
 dependencies = [
  "bytes",
  "dashmap",
@@ -1230,7 +1236,7 @@ dependencies = [
  "itoa",
  "leaky-bucket",
  "pin-project",
- "rosu-mods",
+ "rosu-mods 0.4.1",
  "serde",
  "serde_json",
  "serde_urlencoded",
