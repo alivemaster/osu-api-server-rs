@@ -4,7 +4,7 @@ mod routes;
 mod utils;
 
 use config::Config;
-use rosu_v2::prelude::*;
+use rosu_v2::Osu;
 use routes::create as create_routes;
 use rustls::crypto::ring::default_provider;
 use std::sync::{Arc, LazyLock};

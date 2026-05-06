@@ -971,6 +971,7 @@ dependencies = [
  "mime_guess",
  "regex",
  "reqwest",
+ "rosu-mods",
  "rosu-pp",
  "rosu-v2",
  "rustls",

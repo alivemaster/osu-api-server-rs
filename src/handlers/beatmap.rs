@@ -1,4 +1,6 @@
 use super::*;
+use rosu_mods::GameModsIntermode;
+use rosu_v2::model::beatmap::BeatmapExtended;
 use utils::{cal_beatmap_attrs, replace_assets_urls::beatmapset_extended_assets};
 
 pub async fn handler(

@@ -1,4 +1,5 @@
 use super::*;
+use rosu_v2::model::matches::OsuMatch;
 use utils::replace_assets_urls::osu_match_assets;
 
 pub async fn handler(

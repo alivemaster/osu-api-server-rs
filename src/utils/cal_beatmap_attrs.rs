@@ -1,8 +1,6 @@
-use rosu_pp::model::{
-    beatmap::BeatmapAttributesBuilder,
-    mods::rosu_mods::{GameMode, GameMods, GameModsIntermode},
-};
-use rosu_v2::prelude::BeatmapExtended;
+use rosu_mods::{GameMode, GameMods, GameModsIntermode};
+use rosu_pp::model::beatmap::BeatmapAttributesBuilder;
+use rosu_v2::model::beatmap::BeatmapExtended;
 
 pub fn cal_beatmap_attrs(
     beatmap: &mut BeatmapExtended,

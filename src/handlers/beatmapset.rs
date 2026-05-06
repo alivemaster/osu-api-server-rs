@@ -1,4 +1,5 @@
 use super::*;
+use rosu_v2::model::beatmap::BeatmapsetExtended;
 use utils::replace_assets_urls::beatmapset_extended_assets;
 
 pub async fn handler(

@@ -1,4 +1,5 @@
 use super::*;
+use rosu_v2::model::user::UserExtended;
 use utils::replace_assets_urls::user_extended_assets;
 
 pub async fn handler(

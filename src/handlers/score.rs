@@ -1,4 +1,5 @@
 use super::*;
+use rosu_v2::model::score::Score;
 use utils::{cal_beatmap_attrs, replace_assets_urls::score_assets};
 
 pub async fn handler(

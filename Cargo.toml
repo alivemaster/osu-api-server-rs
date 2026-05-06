@@ -9,11 +9,12 @@ axum = { version = "0.8", features = ["http2"] }
 mime_guess = "2.0.5"
 regex = "1.12"
 reqwest = "0.13"
+rosu-mods = "0.4.1"
+rosu-pp = { git = "https://github.com/MaxOhn/rosu-pp", branch = "next" }
 rosu-v2 = { git = "https://github.com/MaxOhn/rosu-v2", branch = "lazer", features = [
     "default",
     "serialize",
 ] }
-rosu-pp = { git = "https://github.com/MaxOhn/rosu-pp", branch = "next" }
 rustls = { version = "0.23", features = ["ring"] }
 serde = { version = "1.0", features = ["derive"] }
 tokio = { version = "1", features = ["full"] }
