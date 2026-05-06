@@ -14,10 +14,10 @@ pub fn create() -> Router<std::sync::Arc<rosu_v2::Osu>> {
     let matches = Router::new().route("/{match_id}", get(osu_match_handler));
     let scores = Router::new()
         .route("/{score_id}", get(score_handler))
-        .route("/{game_mode}/{score_id}", get(score_handler));
+        .route("/{mode}/{score_id}", get(score_handler));
     let users = Router::new()
         .route("/{user_id}", get(user_handler))
-        .route("/{user_id}/{game_mode}", get(user_handler));
+        .route("/{user_id}/{mode}", get(user_handler));
 
     Router::new()
         .merge(index)
