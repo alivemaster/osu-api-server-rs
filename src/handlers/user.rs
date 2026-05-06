@@ -21,19 +21,10 @@ pub async fn handler(
     Ok(Json(user))
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct UserPaths {
     pub user_id: u32,
     pub mode: Option<u8>,
-}
-
-impl Clone for UserPaths {
-    fn clone(&self) -> Self {
-        Self {
-            user_id: self.user_id,
-            mode: self.mode,
-        }
-    }
 }
 
 type UserResponse = Json<UserExtended>;

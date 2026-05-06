@@ -17,17 +17,9 @@ pub async fn handler(
     Ok(Json(osu_match))
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct OsuMatchPaths {
     pub match_id: u32,
-}
-
-impl Clone for OsuMatchPaths {
-    fn clone(&self) -> Self {
-        Self {
-            match_id: self.match_id,
-        }
-    }
 }
 
 type OsuMatchResponse = Json<OsuMatch>;

@@ -41,19 +41,10 @@ pub async fn handler(
     Ok(Json(score))
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct ScorePaths {
     pub mode: Option<u8>,
     pub score_id: u64,
-}
-
-impl Clone for ScorePaths {
-    fn clone(&self) -> Self {
-        Self {
-            mode: self.mode,
-            score_id: self.score_id,
-        }
-    }
 }
 
 type ScoreResponse = Json<Score>;

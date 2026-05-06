@@ -17,17 +17,9 @@ pub async fn handler(
     Ok(Json(beatmapset))
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct BeatmapsetPaths {
     pub mapset_id: u32,
-}
-
-impl Clone for BeatmapsetPaths {
-    fn clone(&self) -> Self {
-        Self {
-            mapset_id: self.mapset_id,
-        }
-    }
 }
 
 type BeatmapsetResponse = Json<BeatmapsetExtended>;

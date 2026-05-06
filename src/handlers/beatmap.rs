@@ -56,19 +56,10 @@ impl Clone for BeatmapPaths {
     }
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct BeatmapParams {
     pub mode: Option<u8>,
     pub mods: Option<String>,
-}
-
-impl Clone for BeatmapParams {
-    fn clone(&self) -> Self {
-        Self {
-            mode: self.mode,
-            mods: self.mods.to_owned(),
-        }
-    }
 }
 
 type BeatmapResponse = Json<BeatmapExtended>;
