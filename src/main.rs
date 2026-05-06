@@ -6,6 +6,7 @@ mod utils;
 use config::Config;
 use rosu_v2::prelude::*;
 use routes::create as create_routes;
+use rustls::crypto::ring::default_provider;
 use std::sync::{Arc, LazyLock};
 
 static SELF_DIR: LazyLock<std::path::PathBuf> = LazyLock::new(|| {
@@ -18,6 +19,10 @@ static CONFIG: LazyLock<Config> = LazyLock::new(|| Config::parse());
 
 #[tokio::main]
 async fn main() {
+    default_provider()
+        .install_default()
+        .unwrap();
+
     let osu_client = Arc::new(
         Osu::new(CONFIG.osu.client_id, CONFIG.osu.client_secret.to_owned())
             .await

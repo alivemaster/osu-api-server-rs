@@ -6,7 +6,8 @@ pub fn cal_beatmap_attrs(
     mode: Option<u8>,
     mods: Option<GameModsIntermode>,
 ) {
-    let mut attrs_builder = BeatmapAttributesBuilder::new()
+    let mut attrs_builder = BeatmapAttributesBuilder::new();
+    attrs_builder
         .ar(beatmap.ar, false)
         .cs(beatmap.cs, false)
         .od(beatmap.od, false)
@@ -17,7 +18,7 @@ pub fn cal_beatmap_attrs(
         if beatmap.mode as u8 != mode {
             if beatmap.mode as u8 == 0 {
                 // can convert
-                attrs_builder = attrs_builder.mode(mode.into(), true);
+                attrs_builder.mode(mode.into(), true);
 
                 // is a converted map
                 beatmap.convert = true;
@@ -28,14 +29,13 @@ pub fn cal_beatmap_attrs(
             }
         }
     } else {
-        attrs_builder = attrs_builder.mode((beatmap.mode as u8).into(), false)
+        attrs_builder.mode((beatmap.mode as u8).into(), false);
     };
 
     // has mods?
     if let Some(mods) = &mods {
-        attrs_builder = attrs_builder.mods(mods);
+        attrs_builder.mods(mods);
 
-        // bpm and length
         if mods.contains(GameModIntermode::DoubleTime) || mods.contains(GameModIntermode::Nightcore)
         {
             beatmap.bpm = beatmap.bpm * 1.5;
@@ -50,8 +50,8 @@ pub fn cal_beatmap_attrs(
     }
 
     let attrs = attrs_builder.build();
-    beatmap.ar = attrs.ar as f32;
-    beatmap.cs = attrs.cs as f32;
-    beatmap.od = attrs.od as f32;
-    beatmap.hp = attrs.hp as f32;
+    beatmap.ar = attrs.ar();
+    beatmap.cs = attrs.cs();
+    beatmap.od = attrs.od();
+    beatmap.hp = attrs.hp();
 }
