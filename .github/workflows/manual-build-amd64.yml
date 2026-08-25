@@ -6,15 +6,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: debian:13
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Install dependencies
         run: |
-          apt-get update
-          apt-get install -y build-essential pkg-config curl ca-certificates
+          sudo apt-get update
+          sudo apt-get install -y build-essential pkg-config curl ca-certificates
 
       - uses: dtolnay/rust-toolchain@stable
         with:
